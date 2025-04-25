@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi import HTTPException
 from typing import List
 from pydantic import BaseModel
 
@@ -24,3 +25,21 @@ def get_buecher():
 def add_buch(buch: Buch):
     buecher_liste.append(buch)
     return buch
+
+# Suchabfrage einrichten
+@app.get("/buecher/{isbn}", response_model=Buch)
+def get_buch_by_id(isbn: str):
+    for buch in buecher_liste:
+        if buch.isbn == isbn:
+            return buch
+    # Falls kein Buch gefunden wird
+    raise HTTPException(status_code=404, detail="Buch nicht gefunden")
+
+# Deleteanfrage einrichten
+@app.delete("/buecher/{isbn}", response_model=Buch)
+def delete_buch(isbn: str):
+    for index, buch in enumerate(buecher_liste):
+        if buch.isbn == isbn:
+            geloeschtes_buch = buecher_liste.pop(index)
+            return geloeschtes_buch
+    raise HTTPException(status_code=404, detail="Buch nicht gefunden")
