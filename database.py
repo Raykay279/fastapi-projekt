@@ -20,4 +20,15 @@ buecher = Table(
     Column("isbn", String),
 )
 
+# Tabelle für die User definieren
+
+benutzer = Table(
+    "benutzer",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("email", String, unique=True, index=True),
+    Column("name", String),
+    Column("passwort", String),
+    )
+
 metadata.create_all(engine)
