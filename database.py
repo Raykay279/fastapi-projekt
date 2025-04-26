@@ -6,7 +6,7 @@ DATABASE_URL = "sqlite:///./bibliothek.db"
 
 database = Database(DATABASE_URL)
 engine = create_engine(DATABASE_URL)
-metada = MetaData()
+metadata = MetaData()
 
 # Tabelle für die Bücher definieren
 
